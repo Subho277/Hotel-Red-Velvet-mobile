@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Red Velvet — Kalyani</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #8B1A1A;
+    --deep-red: #5C0A0A;
+    --velvet: #C41E3A;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --cream: #FAF5EE;
+    --dark: #1A0A0A;
+    --charcoal: #2C1A1A;
+    --muted: #7A5C5C;
+    --white: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Montserrat', sans-serif; background: var(--dark); color: var(--cream); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: linear-gradient(to bottom, rgba(26,10,10,0.97) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(26,10,10,0.98); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--gold); letter-spacing: 2px; cursor: pointer; }
+  .nav-logo span { color: var(--velvet); font-style: italic; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-right { display: flex; gap: 12px; align-items: center; }
+  .btn-primary { background: var(--velvet); color: white; border: none; padding: 12px 28px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-primary:hover { background: var(--deep-red); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(196,30,58,0.4); }
+  .btn-outline-sm { background: transparent; color: var(--gold); border: 1px solid rgba(201,168,76,0.5); padding: 10px 20px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-outline-sm:hover { background: rgba(201,168,76,0.1); }
+
+  /* HERO */
+  #hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1A0A0A 0%, #3D0A0A 40%, #5C0A0A 70%, #1A0A0A 100%); }
+  .hero-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(45deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 60px), repeating-linear-gradient(-45deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 60px); }
+  .hero-glow { position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(196,30,58,0.25) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); animation: pulse 5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.6;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
+  .hero-content { position: relative; text-align: center; z-index: 2; padding: 20px; }
+  .hero-eyebrow { font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem,8vw,7rem); font-weight: 300; line-height: 1.05; margin-bottom: 16px; opacity: 0; animation: fadeUp 1s ease 0.6s forwards; }
+  .hero-title .accent { color: var(--velvet); font-style: italic; }
+  .hero-title .location { display: block; font-size: 0.45em; letter-spacing: 8px; text-transform: uppercase; color: var(--gold); font-style: normal; margin-top: 8px; }
+  .hero-sub { font-size: 0.85rem; color: rgba(250,245,238,0.65); letter-spacing: 1.5px; margin-bottom: 48px; opacity: 0; animation: fadeUp 1s ease 0.9s forwards; }
+  .hero-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 1s ease 1.2s forwards; }
+  .btn-hero-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 16px 42px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-hero-outline:hover { background: rgba(201,168,76,0.1); transform: translateY(-2px); }
+  .btn-hero-primary { background: var(--velvet); color: white; border: none; padding: 16px 42px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .btn-hero-primary:hover { background: var(--crimson); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(196,30,58,0.4); }
+  .hero-scroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeIn 1s ease 2s forwards; }
+  .hero-scroll span { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollAnim 2s ease-in-out infinite; }
+  @keyframes scrollAnim { 0%{opacity:0;transform:scaleY(0);transform-origin:top} 50%{opacity:1;transform:scaleY(1)} 100%{opacity:0;transform:scaleY(0);transform-origin:bottom} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  /* DIVIDERS & SECTION LABELS */
+  .divider { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 60px 0 40px; }
+  .divider-line { flex: 1; max-width: 120px; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
+  .divider-line.right { background: linear-gradient(to left, transparent, var(--gold)); }
+  .divider-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+  .section-label { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); text-align: center; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,4vw,3.4rem); font-weight: 300; text-align: center; margin-bottom: 12px; }
+  .section-title .accent { color: var(--velvet); font-style: italic; }
+  .section-sub { text-align: center; color: var(--muted); font-size: 0.82rem; letter-spacing: 1px; margin-bottom: 60px; }
+
+  /* ABOUT */
+  .about-section { background: rgba(255,255,255,0.02); border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); padding: 0 60px 80px; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .about-card { background: linear-gradient(135deg, var(--charcoal), var(--deep-red)); border: 1px solid rgba(201,168,76,0.2); padding: 60px 50px; position: relative; overflow: hidden; }
+  .about-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:rgba(196,30,58,0.12); }
+  .about-card::after { content:'"'; font-family:'Cormorant Garamond',serif; font-size:12rem; color:rgba(201,168,76,0.07); position:absolute; top:-20px; right:20px; line-height:1; }
+  .about-card p { font-family:'Cormorant Garamond',serif; font-size:1.35rem; line-height:1.8; font-style:italic; color:var(--cream); position:relative; z-index:1; }
+  .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:24px; }
+  .stat { text-align:center; padding:20px; border:1px solid rgba(201,168,76,0.15); }
+  .stat-num { font-family:'Cormorant Garamond',serif; font-size:2.2rem; color:var(--gold); font-weight:300; }
+  .stat-label { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+  .about-text h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:300; margin-bottom:20px; }
+  .about-text p { color:rgba(250,245,238,0.7); line-height:1.9; font-size:0.88rem; margin-bottom:18px; }
+  .about-features { display:flex; flex-direction:column; gap:12px; margin-top:24px; }
+  .about-feature { display:flex; align-items:center; gap:12px; font-size:0.8rem; color:var(--cream); }
+  .feature-dot { width:6px; height:6px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
+
+  /* ROOMS */
+  .rooms-section { max-width:1300px; margin:0 auto; padding:0 60px 80px; }
+  .rooms-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:30px; }
+  .room-card { position:relative; overflow:hidden; cursor:pointer; border:1px solid rgba(201,168,76,0.1); transition:border-color 0.3s; }
+  .room-card:hover { border-color:rgba(201,168,76,0.4); }
+  .room-img { height:260px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .room-img-bg { position:absolute; inset:0; transition:transform 0.6s ease; background-size:cover; background-position:center; background-repeat:no-repeat; }
+  .room-img::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(26,10,10,0.78), rgba(26,10,10,0.18)); z-index:1; pointer-events:none; }
+  .room-card:hover .room-img-bg { transform:scale(1.05); }
+  .room-type-badge { position:absolute; top:16px; left:16px; background:var(--velvet); color:white; padding:4px 12px; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; z-index:2; }
+  .room-info { padding:28px; background:var(--charcoal); }
+  .room-name { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; margin-bottom:8px; }
+  .room-desc { color:var(--muted); font-size:0.78rem; line-height:1.7; margin-bottom:20px; }
+  .room-amenities { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .amenity-tag { font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,168,76,0.3); padding:4px 10px; }
+  .room-footer { display:flex; justify-content:space-between; align-items:center; }
+  .room-price .from { font-size:0.65rem; letter-spacing:1px; color:var(--muted); text-transform:uppercase; display:block; }
+  .room-price .amount { font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--gold); font-weight:300; }
+  .room-price .per { font-size:0.7rem; color:var(--muted); }
+  .btn-book-room { background:transparent; color:var(--velvet); border:1px solid var(--velvet); padding:8px 20px; font-family:'Montserrat',sans-serif; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
+  .btn-book-room:hover { background:var(--velvet); color:white; }
+
+  /* AMENITIES */
+  .amenities-section { background:linear-gradient(180deg,rgba(92,10,10,0.08) 0%,transparent 100%); border-top:1px solid rgba(201,168,76,0.08); padding:0 60px 80px; }
+  .amenities-inner { max-width:1300px; margin:0 auto; }
+  .amenities-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px; }
+  .amenity-card { text-align:center; padding:40px 20px; border:1px solid rgba(201,168,76,0.1); transition:all 0.3s; }
+  .amenity-card:hover { border-color:rgba(201,168,76,0.35); background:rgba(201,168,76,0.04); transform:translateY(-4px); }
+  .amenity-icon { font-size:2.2rem; margin-bottom:16px; display:block; }
+  .amenity-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:8px; }
+  .amenity-desc { font-size:0.72rem; color:var(--muted); line-height:1.6; }
+
+  /* BOOKING */
+  .booking-section { background:var(--charcoal); border-top:1px solid rgba(201,168,76,0.15); border-bottom:1px solid rgba(201,168,76,0.15); padding:0 60px 80px; }
+  .booking-inner { max-width:1100px; margin:0 auto; }
+  .booking-form-wrap { background:rgba(26,10,10,0.6); border:1px solid rgba(201,168,76,0.2); padding:50px; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:20px; margin-bottom:24px; }
+  .form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-bottom:24px; }
+  .form-group { display:flex; flex-direction:column; gap:8px; }
+  .form-group label { font-size:0.62rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); }
+  .form-group input, .form-group select { background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.2); color:var(--cream); padding:12px 16px; font-family:'Montserrat',sans-serif; font-size:0.82rem; outline:none; transition:border-color 0.3s; -webkit-appearance:none; }
+  .form-group input::placeholder { color:var(--muted); }
+  .form-group input:focus, .form-group select:focus { border-color:var(--gold); }
+  .form-group select option { background:var(--dark); }
+  .btn-search { width:100%; background:var(--velvet); color:white; border:none; padding:16px; font-family:'Montserrat',sans-serif; font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
+  .btn-search:hover { background:var(--crimson); box-shadow:0 8px 30px rgba(196,30,58,0.4); }
+  .booking-result { margin-top:30px; display:none; }
+  .booking-result.show { display:block; }
+  .result-card { background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.3); padding:30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .result-info h4 { font-family:'Cormorant Garamond',serif; font-size:1.3rem; margin-bottom:6px; }
+  .result-info p { font-size:0.78rem; color:var(--muted); }
+  .result-price { text-align:right; }
+  .result-price .total { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--gold); }
+  .result-price .nights-label { font-size:0.7rem; color:var(--muted); }
+
+  /* GALLERY */
+  .gallery-section { max-width:1300px; margin:0 auto; padding:0 60px 80px; }
+  .gallery-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:280px 280px; gap:4px; }
+  .gallery-item { overflow:hidden; position:relative; }
+  .gallery-item:first-child { grid-row:1/3; }
+  .gallery-inner { width:100%; height:100%; transition:transform 0.5s ease; display:flex; align-items:center; justify-content:center; background-size:cover; background-position:center; background-repeat:no-repeat; position:relative; }
+  .gallery-inner::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(26,10,10,0.45), rgba(26,10,10,0.08)); pointer-events:none; }
+  .gallery-item:hover .gallery-inner { transform:scale(1.04); }
+  .gallery-overlay { position:absolute; inset:0; background:rgba(92,10,10,0.5); opacity:0; transition:opacity 0.3s; display:flex; align-items:center; justify-content:center; }
+  .gallery-item:hover .gallery-overlay { opacity:1; }
+  .gallery-overlay span { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; color:white; letter-spacing:2px; }
+  .g1 { background:linear-gradient(135deg,#3D0A0A,#7A1A1A,#C41E3A,#5C0A0A); }
+  .g2 { background:linear-gradient(135deg,#1A0A0A,#5C2A00,#8B4500,#2C1A00); }
+  .g3 { background:linear-gradient(135deg,#0A1A1A,#0A3D3D,#0A5C5C,#0A2C2C); }
+  .g4 { background:linear-gradient(135deg,#1A1A0A,#3D3D00,#5C5C00,#2C2C00); }
+  .g5 { background:linear-gradient(135deg,#1A0A1A,#3D0A3D,#5C0A5C,#2C002C); }
+
+  /* TESTIMONIALS */
+  .testimonials-section { border-top:1px solid rgba(201,168,76,0.08); padding:0 60px 80px; }
+  .testimonials-inner { max-width:1300px; margin:0 auto; }
+  .testimonials-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; }
+  .testimonial-card { padding:40px 30px; border:1px solid rgba(201,168,76,0.12); background:rgba(255,255,255,0.02); position:relative; }
+  .testimonial-card::before { content:'"'; font-family:'Cormorant Garamond',serif; font-size:5rem; color:var(--velvet); position:absolute; top:10px; left:24px; line-height:1; opacity:0.5; }
+  .testimonial-text { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-style:italic; line-height:1.9; color:rgba(250,245,238,0.85); margin-bottom:24px; position:relative; z-index:1; padding-top:20px; }
+  .testimonial-author { font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); }
+  .testimonial-stars { color:var(--gold); font-size:0.8rem; margin-bottom:8px; letter-spacing:3px; }
+
+  /* CONTACT */
+  .contact-section { border-top:1px solid rgba(201,168,76,0.08); padding:0 60px 80px; }
+  .contact-inner { max-width:1300px; margin:0 auto; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .contact-info h3 { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; margin-bottom:30px; }
+  .contact-item { display:flex; gap:16px; margin-bottom:24px; align-items:flex-start; }
+  .contact-icon { font-size:1.2rem; flex-shrink:0; margin-top:2px; }
+  .contact-item h4 { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+  .contact-item p { color:rgba(250,245,238,0.7); font-size:0.83rem; line-height:1.6; }
+  .contact-form { display:flex; flex-direction:column; gap:16px; }
+  .contact-form input, .contact-form textarea { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.2); color:var(--cream); padding:14px 18px; font-family:'Montserrat',sans-serif; font-size:0.82rem; outline:none; transition:border-color 0.3s; resize:none; }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color:var(--muted); }
+  .contact-form input:focus, .contact-form textarea:focus { border-color:var(--gold); }
+
+  /* FOOTER */
+  footer { background:rgba(10,0,0,0.95); border-top:1px solid rgba(201,168,76,0.15); padding:60px 60px 30px; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:50px; max-width:1300px; margin-left:auto; margin-right:auto; }
+  .footer-brand .brand-name { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:300; color:var(--gold); margin-bottom:12px; }
+  .footer-brand p { color:var(--muted); font-size:0.78rem; line-height:1.8; max-width:280px; }
+  .footer-col h4 { font-size:0.62rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .footer-col ul li a { color:var(--muted); text-decoration:none; font-size:0.78rem; transition:color 0.3s; }
+  .footer-col ul li a:hover { color:var(--cream); }
+  .footer-bottom { border-top:1px solid rgba(201,168,76,0.1); padding-top:24px; display:flex; justify-content:space-between; align-items:center; max-width:1300px; margin:0 auto; }
+  .footer-bottom p { font-size:0.7rem; color:var(--muted); letter-spacing:1px; }
+
+  /* ADMIN MODAL */
+  .modal-overlay { position:fixed; inset:0; background:rgba(10,0,0,0.92); backdrop-filter:blur(8px); z-index:9000; display:none; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--charcoal); border:1px solid rgba(201,168,76,0.25); width:90%; max-width:960px; max-height:90vh; overflow-y:auto; position:relative; }
+  .modal-close { position:absolute; top:16px; right:20px; background:none; border:none; color:var(--muted); font-size:1.4rem; cursor:pointer; transition:color 0.3s; z-index:1; }
+  .modal-close:hover { color:var(--gold); }
+  .modal-header { padding:36px 40px 24px; border-bottom:1px solid rgba(201,168,76,0.15); }
+  .modal-header h2 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:300; color:var(--gold); }
+  .modal-header p { font-size:0.75rem; color:var(--muted); margin-top:4px; }
+  .modal-body { padding:36px 40px; }
+  .admin-login { max-width:360px; margin:0 auto; }
+  .admin-login .fg { margin-bottom:20px; }
+  .admin-login .fg label { font-size:0.62rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:8px; }
+  .admin-login .fg input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.25); color:var(--cream); padding:12px 16px; font-family:'Montserrat',sans-serif; font-size:0.85rem; outline:none; transition:border-color 0.3s; }
+  .admin-login .fg input:focus { border-color:var(--gold); }
+  .login-error { color:var(--velvet); font-size:0.75rem; margin-bottom:12px; display:none; }
+  .btn-login { width:100%; background:var(--velvet); color:white; border:none; padding:14px; font-family:'Montserrat',sans-serif; font-size:0.72rem; letter-spacing:3px; text-transform:uppercase; cursor:pointer; transition:background 0.3s; }
+  .btn-login:hover { background:var(--crimson); }
+  .admin-dashboard { display:none; }
+  .admin-stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px; }
+  .admin-stat { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.15); padding:20px; text-align:center; }
+  .admin-stat .val { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--gold); }
+  .admin-stat .lbl { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+  .admin-table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:0.78rem; }
+  th { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); padding:12px 16px; border-bottom:1px solid rgba(201,168,76,0.2); text-align:left; white-space:nowrap; }
+  td { padding:14px 16px; border-bottom:1px solid rgba(255,255,255,0.05); color:rgba(250,245,238,0.8); }
+  tr:hover td { background:rgba(201,168,76,0.04); }
+  .status-badge { display:inline-block; padding:3px 10px; font-size:0.6rem; letter-spacing:1.5px; text-transform:uppercase; }
+  .status-confirmed { background:rgba(76,175,80,0.15); color:#81C784; border:1px solid rgba(76,175,80,0.3); }
+  .status-pending { background:rgba(255,193,7,0.12); color:#FFD54F; border:1px solid rgba(255,193,7,0.3); }
+  .status-checked-in { background:rgba(196,30,58,0.15); color:#EF9A9A; border:1px solid rgba(196,30,58,0.3); }
+  .admin-header-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+  .admin-header-bar h3 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; }
+  .btn-logout { background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.1); padding:7px 16px; font-family:'Montserrat',sans-serif; font-size:0.62rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
+  .btn-logout:hover { color:var(--cream); border-color:var(--muted); }
+
+  /* TOAST */
+  #toast { position:fixed; bottom:30px; right:30px; background:var(--charcoal); border:1px solid var(--gold); color:var(--cream); padding:16px 28px; font-size:0.8rem; letter-spacing:1px; z-index:9999; opacity:0; transform:translateY(20px); transition:all 0.4s; pointer-events:none; max-width:360px; }
+  #toast.show { opacity:1; transform:translateY(0); }
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    nav { padding:16px 24px; }
+    .nav-links { display:none; }
+    .nav-logo { font-size:1.35rem; letter-spacing:1.5px; }
+    .nav-right { gap:8px; }
+    .btn-primary { padding:10px 18px; font-size:0.62rem; letter-spacing:1.6px; }
+    .btn-outline-sm { padding:9px 14px; font-size:0.58rem; letter-spacing:1.6px; }
+    #hero { min-height:100svh; height:auto; padding:110px 0 40px; }
+    .hero-glow { width:540px; height:540px; }
+    .hero-content { max-width:720px; padding:24px 18px 84px; }
+    .hero-eyebrow { font-size:0.58rem; letter-spacing:3.5px; margin-bottom:16px; }
+    .hero-title { font-size:clamp(2.8rem,11vw,4.6rem); margin-bottom:12px; }
+    .hero-title .location { letter-spacing:5px; }
+    .hero-sub { font-size:0.78rem; letter-spacing:1px; margin-bottom:32px; line-height:1.8; }
+    .hero-btns { gap:14px; }
+    .btn-hero-outline,.btn-hero-primary { padding:14px 28px; font-size:0.66rem; letter-spacing:2px; }
+    .hero-scroll { bottom:20px; }
+    .divider { padding:44px 0 28px; gap:14px; }
+    .divider-line { max-width:84px; }
+    .section-label { letter-spacing:3px; }
+    .section-sub { margin-bottom:40px; }
+    .about-grid,.contact-grid { grid-template-columns:1fr; gap:40px; }
+    .about-card { padding:44px 34px; }
+    .about-card p { font-size:1.18rem; line-height:1.65; }
+    .about-stats { gap:12px; }
+    .stat { padding:18px 14px; }
+    .stat-num { font-size:1.9rem; }
+    .form-grid { grid-template-columns:1fr 1fr; }
+    .form-grid-3 { grid-template-columns:1fr; }
+    .booking-form-wrap { padding:36px 30px; }
+    .result-card { padding:24px; }
+    .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+    .gallery-item:first-child { grid-row:auto; }
+    .gallery-item { height:200px !important; }
+    .testimonials-wrap { gap:20px; }
+    .testimonial-card { padding:34px 24px; }
+    .footer-bottom { flex-direction:column; gap:10px; text-align:center; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .admin-stats-row { grid-template-columns:1fr 1fr; }
+    .about-section,.rooms-section,.amenities-section,.booking-section,.gallery-section,.testimonials-section,.contact-section { padding-left:24px; padding-right:24px; }
+    footer { padding:40px 24px 24px; }
+  }
+  @media(max-width:600px){
+    nav { padding:12px 14px; gap:10px; align-items:flex-start; }
+    .nav-logo { font-size:1.1rem; max-width:120px; line-height:1.1; }
+    .nav-right { width:auto; margin-left:auto; flex-direction:column; align-items:stretch; gap:6px; }
+    .btn-primary,.btn-outline-sm { width:100%; padding:9px 12px; font-size:0.54rem; letter-spacing:1.4px; text-align:center; }
+    #hero { padding:102px 0 24px; }
+    .hero-glow { width:360px; height:360px; opacity:0.8; }
+    .hero-content { padding:18px 14px 60px; }
+    .hero-eyebrow { font-size:0.54rem; letter-spacing:2.2px; margin-bottom:14px; }
+    .hero-title { font-size:clamp(2.25rem,13vw,3.25rem); line-height:1.02; }
+    .hero-title .location { font-size:0.38em; letter-spacing:4px; margin-top:10px; }
+    .hero-sub { font-size:0.74rem; line-height:1.7; margin-bottom:24px; }
+    .hero-btns { flex-direction:column; align-items:stretch; gap:10px; }
+    .btn-hero-outline,.btn-hero-primary { width:100%; padding:14px 18px; font-size:0.64rem; letter-spacing:1.8px; }
+    .hero-scroll { display:none; }
+    .divider { padding:36px 0 22px; gap:10px; }
+    .divider-line { max-width:52px; }
+    .section-label { font-size:0.54rem; letter-spacing:2.5px; }
+    .section-title { font-size:clamp(1.9rem,10vw,2.6rem); margin-bottom:10px; }
+    .section-sub { font-size:0.74rem; line-height:1.7; margin-bottom:28px; }
+    .about-section,.rooms-section,.amenities-section,.booking-section,.gallery-section,.testimonials-section,.contact-section { padding-left:16px; padding-right:16px; padding-bottom:56px; }
+    .about-grid,.contact-grid { gap:28px; }
+    .about-card { padding:30px 20px; }
+    .about-card::after { font-size:8rem; top:-10px; right:12px; }
+    .about-card p { font-size:1rem; line-height:1.6; }
+    .about-stats { grid-template-columns:1fr 1fr; gap:10px; }
+    .stat { padding:14px 10px; }
+    .stat-num { font-size:1.55rem; }
+    .stat-label { font-size:0.54rem; letter-spacing:1.3px; }
+    .about-text h3 { font-size:1.35rem; margin-bottom:14px; }
+    .about-text p { font-size:0.8rem; line-height:1.75; margin-bottom:14px; }
+    .about-feature { align-items:flex-start; font-size:0.74rem; line-height:1.5; }
+    .rooms-grid { grid-template-columns:1fr; gap:20px; }
+    .room-img { height:220px; }
+    .room-info { padding:22px 18px; }
+    .room-name { font-size:1.28rem; }
+    .room-desc { font-size:0.74rem; margin-bottom:16px; }
+    .room-footer { flex-direction:column; align-items:flex-start; gap:14px; }
+    .btn-book-room { width:100%; padding:11px 16px; text-align:center; }
+    .amenities-grid { grid-template-columns:1fr 1fr; gap:12px; }
+    .amenity-card { padding:24px 14px; }
+    .amenity-icon { font-size:1.55rem; margin-bottom:10px; }
+    .amenity-name { font-size:0.95rem; }
+    .amenity-desc { font-size:0.68rem; line-height:1.5; }
+    .form-grid { grid-template-columns:1fr; }
+    .booking-form-wrap { padding:22px 16px; }
+    .form-grid,.form-grid-3 { gap:14px; margin-bottom:18px; }
+    .form-group label { font-size:0.56rem; letter-spacing:1.6px; }
+    .form-group input,.form-group select { padding:11px 14px; font-size:0.78rem; }
+    .btn-search { padding:14px; font-size:0.68rem; letter-spacing:2px; }
+    .result-card { padding:18px 16px; gap:14px; }
+    .result-info h4 { font-size:1.12rem; }
+    .result-info p { font-size:0.72rem; line-height:1.5; }
+    .result-price { width:100%; text-align:left; }
+    .result-price .total { font-size:1.65rem; }
+    .gallery-grid { grid-template-columns:1fr; }
+    .gallery-item,.gallery-item[style] { height:220px !important; }
+    .gallery-overlay { opacity:1; background:linear-gradient(to top, rgba(26,10,10,0.72), rgba(26,10,10,0.12)); align-items:flex-end; justify-content:flex-start; padding:18px; }
+    .gallery-overlay span { font-size:0.95rem; letter-spacing:1px; }
+    .testimonial-card { padding:28px 18px; }
+    .testimonial-card::before { font-size:4rem; left:16px; }
+    .testimonial-text { font-size:0.92rem; line-height:1.7; margin-bottom:18px; padding-top:16px; }
+    .contact-info h3 { font-size:1.55rem; margin-bottom:22px; }
+    .contact-item { gap:12px; margin-bottom:18px; }
+    .contact-icon { font-size:0.95rem; }
+    .contact-item h4 { font-size:0.56rem; letter-spacing:1.5px; }
+    .contact-item p { font-size:0.76rem; line-height:1.55; }
+    .contact-form { gap:12px; }
+    .contact-form input,.contact-form textarea { padding:12px 14px; font-size:0.78rem; }
+    .footer-grid { grid-template-columns:1fr; }
+    .footer-brand p,.footer-col ul li a { font-size:0.74rem; }
+    .footer-col h4 { margin-bottom:14px; }
+    footer { padding:32px 16px 20px; }
+    .footer-bottom p { font-size:0.64rem; }
+    .modal { width:94%; max-height:92vh; }
+    .modal-body,.modal-header { padding:20px; }
+    .admin-header-bar { flex-direction:column; align-items:flex-start; gap:12px; }
+    .admin-stats-row { grid-template-columns:1fr; }
+    #toast { left:16px; right:16px; bottom:16px; max-width:none; padding:14px 16px; font-size:0.74rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="smoothScroll('#hero')">Hotel <span>Red Velvet</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-outline-sm" onclick="openAdmin()">🔐 Admin</button>
+    <button class="btn-primary" onclick="smoothScroll('#booking')">Book Now</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. 2010 · Kalyani, West Bengal</p>
+    <h1 class="hero-title">Hotel <span class="accent">Red Velvet</span><span class="location">Kalyani</span></h1>
+    <p class="hero-sub">Where Luxury Meets Warmth — An Unforgettable Stay in the Heart of Kalyani</p>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" onclick="smoothScroll('#booking')">Reserve Your Stay</button>
+      <button class="btn-hero-outline" onclick="smoothScroll('#about')">Discover More</button>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="about-section">
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Our Story</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <div class="about-grid">
+    <div>
+      <div class="about-card">
+        <p>A destination where every detail whispers elegance, and every moment becomes a cherished memory in the heart of Kalyani...</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-num">48+</div><div class="stat-label">Luxury Rooms</div></div>
+        <div class="stat"><div class="stat-num">15</div><div class="stat-label">Years of Excellence</div></div>
+        <div class="stat"><div class="stat-num">4.8★</div><div class="stat-label">Guest Rating</div></div>
+        <div class="stat"><div class="stat-num">12k+</div><div class="stat-label">Happy Guests</div></div>
+      </div>
+    </div>
+    <div class="about-text">
+      <h3>A Legacy of Elegance in Kalyani</h3>
+      <p>Nestled in the serene township of Kalyani, Hotel Red Velvet has been a beacon of warm hospitality and refined luxury since 2010. We blend contemporary comfort with timeless charm to create a home away from home.</p>
+      <p>From our meticulously appointed rooms to our world-class dining, every facet of your stay is crafted with passion and precision — whether you're here for business or leisure.</p>
+      <div class="about-features">
+        <div class="about-feature"><div class="feature-dot"></div>Prime location in Kalyani township, Nadia</div>
+        <div class="about-feature"><div class="feature-dot"></div>Multicuisine restaurant & rooftop lounge</div>
+        <div class="about-feature"><div class="feature-dot"></div>State-of-the-art conference & banquet facilities</div>
+        <div class="about-feature"><div class="feature-dot"></div>24/7 concierge, butler & room service</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROOMS -->
+<div id="rooms" style="padding-top:60px;">
+<div class="rooms-section">
+  <div class="divider" style="padding-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Accommodations</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <h2 class="section-title">Our <span class="accent">Rooms & Suites</span></h2>
+  <p class="section-sub">Each room a sanctuary, each stay a story</p>
+  <div class="rooms-grid">
+    <div class="room-card">
+      <div class="room-img">
+        <div class="room-img-bg" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80');"></div>
+        <div class="room-type-badge">Deluxe</div>
+      </div>
+      <div class="room-info">
+        <div class="room-name">Crimson Deluxe Room</div>
+        <div class="room-desc">Elegantly designed with rich velvet accents, queen-sized bed, city view, and all modern amenities for the discerning traveller.</div>
+        <div class="room-amenities">
+          <span class="amenity-tag">Free WiFi</span><span class="amenity-tag">AC</span><span class="amenity-tag">City View</span><span class="amenity-tag">Room Service</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price"><span class="from">Starting from</span><span class="amount">₹2,499</span><span class="per">/night</span></div>
+          <button class="btn-book-room" onclick="openBookingFor('Crimson Deluxe Room','2499')">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-img">
+        <div class="room-img-bg" style="background-image:url('https://images.unsplash.com/photo-1505692952047-1a78307da8f2?auto=format&fit=crop&w=1200&q=80');"></div>
+        <div class="room-type-badge" style="background:var(--gold);color:var(--dark);">Premium</div>
+      </div>
+      <div class="room-info">
+        <div class="room-name">Royal Velvet Suite</div>
+        <div class="room-desc">Our signature suite featuring a separate living area, king-sized bed with premium linens, a jacuzzi, and panoramic views of Kalyani.</div>
+        <div class="room-amenities">
+          <span class="amenity-tag">Jacuzzi</span><span class="amenity-tag">King Bed</span><span class="amenity-tag">Balcony</span><span class="amenity-tag">Butler</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price"><span class="from">Starting from</span><span class="amount">₹4,999</span><span class="per">/night</span></div>
+          <button class="btn-book-room" onclick="openBookingFor('Royal Velvet Suite','4999')">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-img">
+        <div class="room-img-bg" style="background-image:url('https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80');"></div>
+        <div class="room-type-badge" style="background:#B8860B;">Presidential</div>
+      </div>
+      <div class="room-info">
+        <div class="room-name">Presidential Grand Suite</div>
+        <div class="room-desc">The pinnacle of luxury — two bedrooms, private dining area, dedicated concierge, private terrace, and unmatched amenities.</div>
+        <div class="room-amenities">
+          <span class="amenity-tag">2 Bedrooms</span><span class="amenity-tag">Private Terrace</span><span class="amenity-tag">Concierge</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price"><span class="from">Starting from</span><span class="amount">₹9,999</span><span class="per">/night</span></div>
+          <button class="btn-book-room" onclick="openBookingFor('Presidential Grand Suite','9999')">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- AMENITIES -->
+<div id="amenities" class="amenities-section" style="padding-top:60px;">
+<div class="amenities-inner">
+  <div class="divider" style="padding-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Facilities</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <h2 class="section-title">World-Class <span class="accent">Amenities</span></h2>
+  <p class="section-sub">Every comfort, every pleasure, carefully curated for you</p>
+  <div class="amenities-grid">
+    <div class="amenity-card"><span class="amenity-icon">🍽️</span><div class="amenity-name">Fine Dining</div><div class="amenity-desc">Multicuisine restaurant with authentic Bengali & continental delicacies</div></div>
+    <div class="amenity-card"><span class="amenity-icon">🏊</span><div class="amenity-name">Swimming Pool</div><div class="amenity-desc">Heated pool with dedicated lanes and relaxing poolside lounge</div></div>
+    <div class="amenity-card"><span class="amenity-icon">💆</span><div class="amenity-name">Spa & Wellness</div><div class="amenity-desc">Ayurvedic treatments, aromatherapy, and expert therapists</div></div>
+    <div class="amenity-card"><span class="amenity-icon">🏋️</span><div class="amenity-name">Fitness Center</div><div class="amenity-desc">Modern gym, yoga studio, and personal training sessions</div></div>
+    <div class="amenity-card"><span class="amenity-icon">📶</span><div class="amenity-name">High-Speed WiFi</div><div class="amenity-desc">Complimentary high-speed internet throughout the property</div></div>
+    <div class="amenity-card"><span class="amenity-icon">🚗</span><div class="amenity-name">Valet Parking</div><div class="amenity-desc">24/7 valet service with EV charging stations</div></div>
+    <div class="amenity-card"><span class="amenity-icon">🎭</span><div class="amenity-name">Event Halls</div><div class="amenity-desc">Elegant banquet & conference halls for all occasions</div></div>
+    <div class="amenity-card"><span class="amenity-icon">🍸</span><div class="amenity-name">Rooftop Bar</div><div class="amenity-desc">Sunset cocktails with panoramic Kalyani views, open evenings</div></div>
+  </div>
+</div>
+</div>
+
+<!-- BOOKING -->
+<div id="booking" class="booking-section" style="padding-top:60px;">
+<div class="booking-inner">
+  <div class="divider" style="padding-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Reservations</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <h2 class="section-title">Book Your <span class="accent">Stay</span></h2>
+  <p class="section-sub">Reserve your perfect room in just a few clicks</p>
+  <div class="booking-form-wrap">
+    <div class="form-grid">
+      <div class="form-group"><label>Check-In Date</label><input type="date" id="checkIn"></div>
+      <div class="form-group"><label>Check-Out Date</label><input type="date" id="checkOut"></div>
+      <div class="form-group"><label>Guests</label>
+        <select id="guests"><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5+ Guests</option></select>
+      </div>
+      <div class="form-group"><label>Room Type</label>
+        <select id="roomType">
+          <option value="2499">Crimson Deluxe — ₹2,499/night</option>
+          <option value="4999">Royal Velvet Suite — ₹4,999/night</option>
+          <option value="9999">Presidential Grand Suite — ₹9,999/night</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid-3">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="guestName" placeholder="Your full name"></div>
+      <div class="form-group"><label>Email Address *</label><input type="email" id="guestEmail" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" id="guestPhone" placeholder="+91 XXXXX XXXXX"></div>
+    </div>
+    <button class="btn-search" onclick="checkAvailability()">✦ Check Availability & Book</button>
+    <div class="booking-result" id="bookingResult">
+      <div class="result-card">
+        <div class="result-info">
+          <h4 id="resultRoom">—</h4>
+          <p id="resultDates">—</p>
+          <p id="resultGuests" style="margin-top:6px;"></p>
+        </div>
+        <div class="result-price">
+          <div class="total" id="resultTotal">—</div>
+          <div class="nights-label" id="resultNights">—</div>
+          <button class="btn-hero-primary" style="margin-top:14px;font-size:0.68rem;padding:12px 28px;" onclick="confirmBooking()">✓ Confirm Booking</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- GALLERY -->
+<div id="gallery" style="padding-top:60px;">
+<div class="gallery-section">
+  <div class="divider" style="padding-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Gallery</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <h2 class="section-title">A Glimpse of <span class="accent">Splendour</span></h2>
+  <p class="section-sub">Visual moments from Hotel Red Velvet</p>
+  <div class="gallery-grid">
+    <div class="gallery-item"><div class="gallery-inner" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1400&q=80');"></div><div class="gallery-overlay"><span>Lobby & Reception</span></div></div>
+    <div class="gallery-item" style="height:280px;"><div class="gallery-inner" style="height:100%;background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80');"></div><div class="gallery-overlay"><span>Fine Dining</span></div></div>
+    <div class="gallery-item" style="height:280px;"><div class="gallery-inner" style="height:100%;background-image:url('https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?auto=format&fit=crop&w=900&q=80');"></div><div class="gallery-overlay"><span>Swimming Pool</span></div></div>
+    <div class="gallery-item" style="height:280px;"><div class="gallery-inner" style="height:100%;background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80');"></div><div class="gallery-overlay"><span>Royal Suite</span></div></div>
+    <div class="gallery-item" style="height:280px;"><div class="gallery-inner" style="height:100%;background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=900&q=80');"></div><div class="gallery-overlay"><span>Rooftop Lounge</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div id="testimonials" class="testimonials-section" style="padding-top:60px;">
+<div class="testimonials-inner">
+  <div class="divider" style="padding-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Guest Reviews</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <h2 class="section-title">What Our Guests <span class="accent">Say</span></h2>
+  <p class="section-sub">Moments cherished, memories made</p>
+  <div class="testimonials-wrap">
+    <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-text">An absolutely magical stay. The Royal Velvet Suite exceeded every expectation — the service, the food, the views. We will return for every anniversary.</div><div class="testimonial-author">Priya & Rahul Sharma — Kolkata</div></div>
+    <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-text">Stayed for a corporate event and was blown away. The conference hall is world-class and the staff went above and beyond at every step.</div><div class="testimonial-author">Arjun Chatterjee — Mumbai</div></div>
+    <div class="testimonial-card"><div class="testimonial-stars">★★★★☆</div><div class="testimonial-text">The spa and rooftop bar alone are worth the trip. Beautiful ambience and the Bengali cuisine at the restaurant is simply outstanding!</div><div class="testimonial-author">Meera Banerjee — Bangalore</div></div>
+  </div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-section" style="padding-top:60px;">
+<div class="contact-inner">
+  <div class="divider" style="padding-top:0;"><div class="divider-line"></div><div class="divider-diamond"></div><div class="section-label">Get In Touch</div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+  <h2 class="section-title">Contact <span class="accent">Us</span></h2>
+  <p class="section-sub">We'd love to hear from you</p>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Hotel Red Velvet<br><span style="color:var(--gold);font-size:0.75em;">Kalyani, West Bengal</span></h3>
+      <div class="contact-item"><span class="contact-icon">📍</span><div><h4>Address</h4><p>12, Bypass Road, Sector-IV<br>Kalyani, Nadia, West Bengal — 741235</p></div></div>
+      <div class="contact-item"><span class="contact-icon">📞</span><div><h4>Phone</h4><p>+91 33 2502 XXXX<br>+91 98300 XXXXX (Reservations)</p></div></div>
+      <div class="contact-item"><span class="contact-icon">✉️</span><div><h4>Email</h4><p>reservations@hotelredvelvet.in<br>info@hotelredvelvet.in</p></div></div>
+      <div class="contact-item"><span class="contact-icon">🕐</span><div><h4>Check-in / Check-out</h4><p>Check-in: 2:00 PM | Check-out: 11:00 AM<br>24/7 Front Desk Available</p></div></div>
+    </div>
+    <div>
+      <form class="contact-form" onsubmit="sendMessage(event)">
+        <input type="text" placeholder="Your Full Name" required>
+        <input type="email" placeholder="Your Email Address" required>
+        <input type="tel" placeholder="Phone Number">
+        <input type="text" placeholder="Subject">
+        <textarea rows="5" placeholder="Your message..."></textarea>
+        <button type="submit" class="btn-hero-primary" style="border:none;cursor:pointer;width:100%;padding:16px;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand-name">Hotel Red Velvet</div>
+      <p>A sanctuary of warmth, elegance and world-class hospitality nestled in the heart of Kalyani, West Bengal.</p>
+      <div style="display:flex;gap:14px;margin-top:20px;">
+        <span style="cursor:pointer;font-size:1.3rem;" title="Facebook">📘</span>
+        <span style="cursor:pointer;font-size:1.3rem;" title="Instagram">📷</span>
+        <span style="cursor:pointer;font-size:1.3rem;" title="Twitter">🐦</span>
+        <span style="cursor:pointer;font-size:1.3rem;" title="YouTube">▶️</span>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#about">About Us</a></li><li><a href="#rooms">Rooms & Suites</a></li><li><a href="#amenities">Amenities</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#booking">Book Now</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Restaurant & Bar</a></li><li><a href="#">Spa & Wellness</a></li><li><a href="#">Events & Weddings</a></li><li><a href="#">Airport Transfers</a></li><li><a href="#">Concierge</a></li></ul></div>
+    <div class="footer-col"><h4>Policies</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Cancellation Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">FAQs</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Hotel Red Velvet, Kalyani. All rights reserved.</p>
+    <p style="color:var(--gold);font-size:0.65rem;letter-spacing:2px;">MADE WITH ❤️ IN KALYANI</p>
+  </div>
+</footer>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAdmin()">✕</button>
+    <div class="modal-header">
+      <h2>🔐 Admin Portal</h2>
+      <p id="adminModalSub">Restricted access — Hotel Red Velvet staff only</p>
+    </div>
+    <div class="modal-body">
+      <!-- Login -->
+      <div class="admin-login" id="adminLogin">
+        <div class="fg"><label>Username</label><input type="text" id="adminUser" placeholder="Enter username"></div>
+        <div class="fg"><label>Password</label><input type="password" id="adminPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        <div class="login-error" id="loginError">Invalid credentials. Please try again.</div>
+        <button class="btn-login" onclick="doLogin()">Access Dashboard</button>
+        <p style="font-size:0.68rem;color:var(--muted);text-align:center;margin-top:16px;">Demo credentials: <strong style="color:var(--gold);">admin</strong> / <strong style="color:var(--gold);">redvelvet2025</strong></p>
+      </div>
+      <!-- Dashboard -->
+      <div class="admin-dashboard" id="adminDashboard">
+        <div class="admin-header-bar">
+          <h3>📊 Bookings Dashboard</h3>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span style="font-size:0.7rem;color:var(--muted);" id="lastUpdated"></span>
+            <button class="btn-logout" onclick="doLogout()">Logout</button>
+          </div>
+        </div>
+        <div class="admin-stats-row">
+          <div class="admin-stat"><div class="val" id="statTotal">0</div><div class="lbl">Total Bookings</div></div>
+          <div class="admin-stat"><div class="val" id="statConfirmed">0</div><div class="lbl">Confirmed</div></div>
+          <div class="admin-stat"><div class="val" id="statCheckedIn">0</div><div class="lbl">Checked In</div></div>
+          <div class="admin-stat"><div class="val" id="statRevenue">₹0</div><div class="lbl">Total Revenue</div></div>
+        </div>
+        <div class="admin-table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Booking ID</th><th>Guest Name</th><th>Room</th><th>Check-In</th><th>Check-Out</th><th>Guests</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody id="bookingTableBody"></tbody>
+          </table>
+          <div id="noBookings" style="text-align:center;padding:40px;color:var(--muted);font-size:0.82rem;display:none;">No bookings yet. Make your first booking from the website!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+  // ── BOOKINGS DATA ──
+  function getBookings(){ return JSON.parse(localStorage.getItem('hrv_bookings')||'[]'); }
+  function saveBookings(b){ localStorage.setItem('hrv_bookings',JSON.stringify(b)); }
+
+  // Seed demo data if empty
+  if(!localStorage.getItem('hrv_bookings')){
+    saveBookings([
+      {id:'RV001',name:'Priya Sharma',room:'Royal Velvet Suite',checkIn:'2025-06-10',checkOut:'2025-06-13',guests:'2 Guests',total:14997,status:'Confirmed'},
+      {id:'RV002',name:'Arjun Chatterjee',room:'Crimson Deluxe Room',checkIn:'2025-06-12',checkOut:'2025-06-14',guests:'1 Guest',total:4998,status:'Checked In'},
+      {id:'RV003',name:'Meera Banerjee',room:'Presidential Grand Suite',checkIn:'2025-06-15',checkOut:'2025-06-17',guests:'4 Guests',total:19998,status:'Confirmed'},
+      {id:'RV004',name:'Saurav Das',room:'Crimson Deluxe Room',checkIn:'2025-06-20',checkOut:'2025-06-22',guests:'2 Guests',total:4998,status:'Pending'},
+    ]);
+  }
+
+  // ── NAV SCROLL ──
+  window.addEventListener('scroll',()=>{ document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60); });
+
+  function smoothScroll(sel){ document.querySelector(sel)?.scrollIntoView({behavior:'smooth'}); }
+
+  // ── BOOKING DATES ──
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('checkIn').min = today;
+  document.getElementById('checkOut').min = today;
+  document.getElementById('checkIn').value = today;
+  const defOut = new Date(); defOut.setDate(defOut.getDate()+2);
+  document.getElementById('checkOut').value = defOut.toISOString().split('T')[0];
+
+  // ── ROOM SELECTION ──
+  function openBookingFor(roomName, priceStr){
+    const sel = document.getElementById('roomType');
+    for(let o of sel.options){ if(o.value===priceStr){ sel.value=priceStr; break; } }
+    document.getElementById('booking').scrollIntoView({behavior:'smooth'});
+  }
+
+  // ── CHECK AVAILABILITY ──
+  function checkAvailability(){
+    const checkIn = document.getElementById('checkIn').value;
+    const checkOut = document.getElementById('checkOut').value;
+    const guests = document.getElementById('guests').value;
+    const roomSel = document.getElementById('roomType');
+    const roomText = roomSel.options[roomSel.selectedIndex].text.split('—')[0].trim();
+    const pricePerNight = parseInt(roomSel.value);
+    const name = document.getElementById('guestName').value.trim();
+    const email = document.getElementById('guestEmail').value.trim();
+    const phone = document.getElementById('guestPhone').value.trim();
+
+    if(!checkIn||!checkOut){ showToast('⚠️ Please select check-in and check-out dates.'); return; }
+    if(!name||!email){ showToast('⚠️ Please enter your name and email address.'); return; }
+    if(checkIn>=checkOut){ showToast('⚠️ Check-out must be after check-in.'); return; }
+
+    const nights = Math.round((new Date(checkOut)-new Date(checkIn))/(1000*60*60*24));
+    const total = nights*pricePerNight;
+
+    document.getElementById('resultRoom').textContent = roomText;
+    document.getElementById('resultDates').textContent = `${formatDate(checkIn)} → ${formatDate(checkOut)} · ${nights} night${nights>1?'s':''}`;
+    document.getElementById('resultGuests').textContent = `${guests}  |  ${email}`;
+    document.getElementById('resultTotal').textContent = `₹${total.toLocaleString('en-IN')}`;
+    document.getElementById('resultNights').textContent = `₹${pricePerNight.toLocaleString('en-IN')}/night × ${nights} night${nights>1?'s':''}`;
+
+    const result = document.getElementById('bookingResult');
+    result.classList.add('show');
+    result.scrollIntoView({behavior:'smooth',block:'nearest'});
+    window._pendingBooking = {name,email,phone,room:roomText,checkIn,checkOut,guests,total,pricePerNight,nights};
+  }
+
+  function confirmBooking(){
+    const pb = window._pendingBooking;
+    if(!pb){ return; }
+    const bks = getBookings();
+    const id = 'RV'+(100+bks.length+1).toString().padStart(3,'0');
+    bks.unshift({id,name:pb.name,room:pb.room,checkIn:pb.checkIn,checkOut:pb.checkOut,guests:pb.guests,total:pb.total,status:'Confirmed'});
+    saveBookings(bks);
+    document.getElementById('bookingResult').classList.remove('show');
+    showToast(`✅ Booking ${id} confirmed for ${pb.name}! A confirmation will be sent to ${pb.email}`);
+    document.getElementById('guestName').value='';
+    document.getElementById('guestEmail').value='';
+    document.getElementById('guestPhone').value='';
+    window._pendingBooking = null;
+  }
+
+  function formatDate(d){
+    const dt = new Date(d+'T00:00:00');
+    return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  }
+
+  // ── ADMIN ──
+  function openAdmin(){
+    document.getElementById('adminModal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeAdmin(){
+    document.getElementById('adminModal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+  document.getElementById('adminModal').addEventListener('click',function(e){ if(e.target===this) closeAdmin(); });
+
+  function doLogin(){
+    const u=document.getElementById('adminUser').value.trim();
+    const p=document.getElementById('adminPass').value.trim();
+    if(u==='admin'&&p==='redvelvet2025'){
+      document.getElementById('loginError').style.display='none';
+      document.getElementById('adminLogin').style.display='none';
+      document.getElementById('adminDashboard').style.display='block';
+      document.getElementById('adminModalSub').textContent='Welcome back, Admin 👋';
+      document.getElementById('lastUpdated').textContent='Last updated: '+new Date().toLocaleTimeString('en-IN');
+      renderDashboard();
+    } else {
+      document.getElementById('loginError').style.display='block';
+      document.getElementById('adminPass').value='';
+    }
+  }
+
+  function doLogout(){
+    document.getElementById('adminLogin').style.display='block';
+    document.getElementById('adminDashboard').style.display='none';
+    document.getElementById('adminUser').value='';
+    document.getElementById('adminPass').value='';
+    document.getElementById('adminModalSub').textContent='Restricted access — Hotel Red Velvet staff only';
+  }
+
+  function renderDashboard(){
+    const bks = getBookings();
+    const confirmed = bks.filter(b=>b.status==='Confirmed').length;
+    const checkedIn = bks.filter(b=>b.status==='Checked In').length;
+    const revenue = bks.reduce((s,b)=>s+(b.total||0),0);
+    document.getElementById('statTotal').textContent = bks.length;
+    document.getElementById('statConfirmed').textContent = confirmed;
+    document.getElementById('statCheckedIn').textContent = checkedIn;
+    document.getElementById('statRevenue').textContent = '₹'+revenue.toLocaleString('en-IN');
+
+    const tbody = document.getElementById('bookingTableBody');
+    const noMsg = document.getElementById('noBookings');
+    if(bks.length===0){ tbody.innerHTML=''; noMsg.style.display='block'; return; }
+    noMsg.style.display='none';
+    tbody.innerHTML = bks.map((b,i)=>`
+      <tr>
+        <td style="color:var(--muted);">${i+1}</td>
+        <td style="color:var(--gold);font-weight:500;">${b.id}</td>
+        <td>${b.name}</td>
+        <td style="font-size:0.74rem;">${b.room}</td>
+        <td>${formatDate(b.checkIn)}</td>
+        <td>${formatDate(b.checkOut)}</td>
+        <td>${b.guests}</td>
+        <td style="color:var(--gold-light);font-family:'Cormorant Garamond',serif;font-size:1.05rem;">₹${(b.total||0).toLocaleString('en-IN')}</td>
+        <td><span class="status-badge ${b.status==='Confirmed'?'status-confirmed':b.status==='Checked In'?'status-checked-in':'status-pending'}">${b.status}</span></td>
+      </tr>`).join('');
+  }
+
+  // ── CONTACT ──
+  function sendMessage(e){
+    e.preventDefault();
+    showToast('✉️ Message sent! We\'ll get back to you within 24 hours.');
+    e.target.reset();
+  }
+
+  // ── TOAST ──
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),4500);
+  }
+</script>
+</body>
+</html>
